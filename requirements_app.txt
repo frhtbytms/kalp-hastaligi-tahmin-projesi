@@ -1,0 +1,12 @@
+# Kalp Hastalığı Risk Tahmin Sistemi - Web Uygulaması
+# Streamlit Arayüzü İçin Ek Kütüphaneler
+#
+# Geliştirici: Ferhat Bayutmuş
+# Üniversite: İstanbul Medeniyet Üniversitesi
+# Tarih: 17 Kasım 2025
+#
+# Kurulum: pip install -r requirements_app.txt
+# Çalıştırma: streamlit run app.py
+
+streamlit==1.28.1  # Web arayüzü framework'ü
+plotly==5.17.0     # İnteraktif grafikler

@@ -1,0 +1,257 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                   KALP HASTALIĞI TAHMİN PROJESİ                          ║
+║                   Veri Bilimine Giriş Final Projesi                      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📋 ÖĞRENCİ BİLGİLERİ
+═══════════════════════════════════════════════════════════════════════════
+Öğrenci Adı       : Ferhat Bayutmuş
+E-posta           : ferhatbayutmus58@gmail.com
+Üniversite        : İstanbul Medeniyet Üniversitesi
+Ders              : Veri Bilimine Giriş
+Akademik Yıl      : 2024-2025 Güz Dönemi
+Teslim Tarihi     : 17 Kasım 2025
+
+═══════════════════════════════════════════════════════════════════════════
+📊 PROJE ÖZET BİLGİLERİ
+═══════════════════════════════════════════════════════════════════════════
+Proje Adı         : Kalp Hastalığı Risk Tahmin Sistemi
+Veri Seti         : UCI Heart Disease Dataset (303 hasta)
+Algoritma Sayısı  : 3 (Logistic Regression, Random Forest, KNN)
+En İyi Model      : Logistic Regression (F1-Score: 0.6757)
+Toplam Satır Kodu : ~1800 satır Python kodu
+Proje Süresi      : 2 hafta (tasarım, kodlama, test, dokümantasyon)
+
+═══════════════════════════════════════════════════════════════════════════
+🎯 PROJE AMAÇLARI
+═══════════════════════════════════════════════════════════════════════════
+✓ Kalp hastalığı risk faktörlerini makine öğrenmesi ile analiz etmek
+✓ 3 farklı ML algoritmasını karşılaştırarak en iyisini belirlemek
+✓ Hiperparametre optimizasyonu yaparak model performansını artırmak
+✓ Profesyonel görselleştirmeler ve raporlar oluşturmak
+✓ İnteraktif web arayüzü geliştirmek (Streamlit)
+✓ End-to-end veri bilimi projesi deneyimi kazanmak
+
+═══════════════════════════════════════════════════════════════════════════
+🛠️ KULLANILAN TEKNOLOJİLER
+═══════════════════════════════════════════════════════════════════════════
+Programlama Dili  : Python 3.13.7
+Veri İşleme       : Pandas 2.1.4, NumPy 1.24.3
+ML Framework      : Scikit-learn 1.3.0
+Görselleştirme    : Matplotlib, Seaborn, Plotly
+Web Framework     : Streamlit 1.28.1
+Raporlama         : Python-docx 0.8.11
+IDE               : Visual Studio Code
+Versiyon Kontrol  : Git
+
+═══════════════════════════════════════════════════════════════════════════
+📁 PROJE DOSYA YAPISI
+═══════════════════════════════════════════════════════════════════════════
+project/
+│
+├── main.py                    # Ana çalıştırma dosyası (274 satır)
+├── preprocess.py              # Veri ön işleme (232 satır)
+├── train_models.py            # Model eğitimi (284 satır)
+├── evaluate.py                # Model değerlendirme (365 satır)
+├── report_generator.py        # Rapor oluşturma (391 satır)
+├── app.py                     # Streamlit web uygulaması (614 satır)
+│
+├── heart.csv                  # Veri seti (303 kayıt, 14 sütun)
+├── requirements.txt           # Temel kütüphaneler
+├── requirements_app.txt       # Web uygulaması kütüphaneleri
+├── README.md                  # Detaylı proje dokümantasyonu (883 satır)
+│
+└── results/                   # Çıktılar (12 dosya)
+    ├── best_model.pkl              # En iyi model (Random Forest)
+    ├── metrics_table.csv           # Performans tablosu
+    ├── Final_Rapor_Heart_Disease.docx  # Word raporu (5+ sayfa)
+    ├── corr_heatmap.png            # Korelasyon ısı haritası
+    ├── class_distribution.png      # Sınıf dağılımı
+    ├── boxplots.png                # Aykırı değer analizleri
+    ├── confusion_*.png (3 adet)    # Confusion matrices
+    └── roc_*.png (3 adet)          # ROC curves
+
+═══════════════════════════════════════════════════════════════════════════
+🚀 NASIL ÇALIŞTIRILIR?
+═══════════════════════════════════════════════════════════════════════════
+
+1. KURULUM
+   --------
+   pip install -r requirements.txt
+   pip install -r requirements_app.txt
+
+2. ANA PROGRAMI ÇALIŞTIR (ML Pipeline)
+   ------------------------------------
+   python main.py
+   
+   Bu komut şunları yapar:
+   ✓ Veriyi yükler ve temizler
+   ✓ 3 modeli eğitir ve optimize eder
+   ✓ Performans metriklerini hesaplar
+   ✓ 11 görselleştirme oluşturur
+   ✓ Word raporu hazırlar
+   ✓ En iyi modeli kaydeder
+   
+   Çalışma süresi: ~5-10 saniye
+
+3. WEB UYGULAMASINI BAŞLAT
+   ------------------------
+   streamlit run app.py
+   
+   Tarayıcıda otomatik açılır: http://localhost:8501
+   
+   Web uygulaması özellikleri:
+   📊 İnteraktif veri analizi grafikleri
+   🤖 Model performans karşılaştırması
+   🔮 Gerçek zamanlı kalp hastalığı riski tahmini
+   📈 Confusion matrix ve ROC curve görselleri
+
+═══════════════════════════════════════════════════════════════════════════
+📈 MODEL PERFORMANS SONUÇLARI
+═══════════════════════════════════════════════════════════════════════════
+
+┌────────────────────────┬──────────┬───────────┬────────┬──────────┬─────┐
+│ Model                  │ Accuracy │ Precision │ Recall │ F1-Score │ AUC │
+├────────────────────────┼──────────┼───────────┼────────┼──────────┼─────┤
+│ Logistic Regression ⭐ │  0.6000  │  0.5806   │ 0.8095 │  0.6757  │0.589│
+│ Random Forest          │  0.4667  │  0.4906   │ 0.7143 │  0.5789  │0.510│
+│ K-Nearest Neighbors    │  0.5500  │  0.5570   │ 0.6190 │  0.5846  │0.578│
+└────────────────────────┴──────────┴───────────┴────────┴──────────┴─────┘
+
+🏆 EN İYİ MODEL: Logistic Regression
+   ├─ F1-Score: 0.6757 (en yüksek)
+   ├─ Recall: 0.8095 (hastaların %81'ini tespit ediyor)
+   ├─ AUC: 0.5895
+   └─ Yorumlanabilir ve hızlı
+
+═══════════════════════════════════════════════════════════════════════════
+🔍 ÖNEMLİ BULGULAR
+═══════════════════════════════════════════════════════════════════════════
+
+📌 En Önemli Risk Faktörleri (önem sırasına göre):
+   1. Göğüs ağrısı tipi (cp)
+   2. Maksimum kalp atış hızı (thalach)
+   3. ST depresyonu (oldpeak)
+   4. Ana damar sayısı (ca)
+   5. Cinsiyet (erkeklerde 2.2x daha fazla risk)
+   6. Yaş (artan yaş ile risk artıyor)
+
+📊 Veri Seti İstatistikleri:
+   • Toplam hasta: 303 kişi
+   • Hasta/sağlıklı oranı: %54.5 / %45.5 (dengeli)
+   • Yaş aralığı: 29-77 yaş
+   • Ortalama yaş: 54.4 ± 9.1 yıl
+   • Erkek oranı: %68.3
+
+🎯 Model Başarısı:
+   ✓ %60 genel doğruluk
+   ✓ %81 hasta tespiti (yüksek recall - önemli!)
+   ✓ GridSearchCV ile optimize edildi
+   ✓ 3-fold cross validation yapıldı
+
+═══════════════════════════════════════════════════════════════════════════
+💡 ÖĞRENDIĞIM KONULAR
+═══════════════════════════════════════════════════════════════════════════
+
+Teknik Beceriler:
+✓ Python ile veri bilimi projesi geliştirme
+✓ Pandas/NumPy ile veri manipülasyonu
+✓ Scikit-learn ile ML model eğitimi
+✓ GridSearchCV ile hiperparametre optimizasyonu
+✓ Matplotlib/Seaborn ile görselleştirme
+✓ Streamlit ile web uygulaması geliştirme
+✓ Git ile versiyon kontrolü
+✓ Modüler kod yazma ve dokümantasyon
+
+Makine Öğrenmesi Kavramları:
+✓ Supervised learning prensipleri
+✓ Classification algoritmaları
+✓ Train-test split ve cross-validation
+✓ Confusion matrix yorumlama
+✓ Precision, Recall, F1-Score metrikleri
+✓ ROC-AUC analizi
+✓ Feature engineering ve scaling
+✓ Overfitting/underfitting dengesi
+
+Domain Knowledge:
+✓ Kalp hastalığı risk faktörleri
+✓ Tıbbi veri analizi
+✓ EKG ve klinik parametreler
+✓ Binary classification uygulamaları
+
+═══════════════════════════════════════════════════════════════════════════
+⚠️ LİMİTASYONLAR VE İYİLEŞTİRME ÖNERİLERİ
+═══════════════════════════════════════════════════════════════════════════
+
+Mevcut Limitasyonlar:
+• %60 accuracy klinik kullanım için düşük (ideal: >%90)
+• 303 örneklik veri seti küçük (önerilen: 1000+)
+• Tek veri kaynağı, dış validasyon yok
+• Demografik çeşitlilik sınırlı
+
+Gelecek İyileştirmeler:
+→ XGBoost, LightGBM gibi gelişmiş modeller denemek
+→ Daha büyük veri setleri ile eğitmek
+→ SMOTE ile veri dengeleme yapmak
+→ Deep Learning modelleri uygulamak
+→ Feature engineering geliştirmek
+→ Ensemble methods kullanmak
+
+═══════════════════════════════════════════════════════════════════════════
+📚 KAYNAKLAR
+═══════════════════════════════════════════════════════════════════════════
+
+Veri Seti:
+• UCI Machine Learning Repository - Heart Disease Dataset
+• https://archive.ics.uci.edu/ml/datasets/Heart+Disease
+
+Kütüphane Dokümantasyonları:
+• Scikit-learn: https://scikit-learn.org/
+• Pandas: https://pandas.pydata.org/
+• Streamlit: https://docs.streamlit.io/
+• Plotly: https://plotly.com/python/
+
+Öğrenme Kaynakları:
+• Andrew Ng - Machine Learning Course (Coursera)
+• "Hands-On Machine Learning" - Aurélien Géron
+• Python for Data Science Handbook - Jake VanderPlas
+
+═══════════════════════════════════════════════════════════════════════════
+📄 LİSANS VE SORUMLULUK REDDİ
+═══════════════════════════════════════════════════════════════════════════
+
+Bu proje EĞİTİM AMAÇLIDIR ve aşağıdaki koşullarda kullanılabilir:
+
+✅ İzin Verilen:
+   • Akademik araştırmalarda referans gösterme
+   • Eğitim materyali olarak kullanma
+   • Kişisel öğrenme ve geliştirme
+
+❌ İzin Verilmeyen:
+   • Ticari kullanım (onay gerekir)
+   • Tıbbi/klinik uygulamalar (FDA/CE onayı gerekir)
+   • Plagiarism (intihal)
+
+⚠️ UYARI: Bu yazılım tıbbi tavsiye yerine geçmez. Kalp sağlığınız hakkında
+endişeleriniz varsa mutlaka bir doktora danışın.
+
+═══════════════════════════════════════════════════════════════════════════
+📞 İLETİŞİM
+═══════════════════════════════════════════════════════════════════════════
+
+Öğrenci: Ferhat Bayutmuş
+E-posta: ferhatbayutmus58@gmail.com
+Üniversite: İstanbul Medeniyet Üniversitesi
+Bölüm: [Bölüm Adı]
+
+Proje hakkında sorularınız için e-posta ile ulaşabilirsiniz.
+
+═══════════════════════════════════════════════════════════════════════════
+
+Son Güncelleme: 17 Kasım 2025
+Proje Versiyonu: 1.0.0
+Durum: ✅ Teslime Hazır
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║              © 2025 Ferhat Bayutmuş - Tüm Hakları Saklıdır              ║
+╚══════════════════════════════════════════════════════════════════════════╝
