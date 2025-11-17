@@ -834,9 +834,9 @@ AUC = ROC eğrisi altındaki alan (0.5-1.0 arası)
 **📅 Teslim Tarihi:** 17 Kasım 2025
 
 **🔗 Proje Linkleri:**
-- GitHub Repository: [Buraya eklenecek]
+- GitHub Repository: https://github.com/frhtbytms/kalp-hastaligi-tahmin-projesi
 - Streamlit Demo: [Deploy edildiğinde eklenecek]
-- Kaggle Notebook: [Buraya eklenecek]
+- Kaggle Notebook: [İsteğe bağlı]
 
 ---
 
