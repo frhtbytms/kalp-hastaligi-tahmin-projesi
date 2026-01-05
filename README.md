@@ -1,44 +1,43 @@
-# ❤️ Kalp Hastalığı Risk Tahmin Sistemi
+# ❤️ Kalp Hastalığı Risk Tahmini
 
 **Veri Bilimine Giriş - Final Projesi**  
 **Öğrenci:** Ferhat Bayutmuş  
 **Üniversite:** İstanbul Medeniyet Üniversitesi  
 **Akademik Yıl:** 2025-2026 Güz Dönemi  
-**Teslim Tarihi:** 17 Kasım 2025
 
 ---
 
-## 📋 Projenin Amacı ve Kapsamı
+## 📋 Proje Hakkında
 
-Bu çalışmada, **makine öğrenmesi** teknikleri kullanılarak kalp hastalığı riskinin tahmin edilmesi hedeflenmiştir. Kalp hastalıkları dünya genelinde en yaygın ölüm nedenlerinden biri olduğu için, erken teşhis hayati önem taşımaktadır. 
+Kalp hastalıkları dünya genelinde en yaygın ölüm nedenlerinden biri olduğu için, erken teşhis çok önemli. Bu projede **makine öğrenmesi** kullanarak kalp hastalığı riskini tahmin etmeye çalıştım. 
 
-Proje kapsamında:
-- **UCI Machine Learning Repository**'den alınan gerçek hasta verisi analiz edilmiştir
-- Veri temizleme, ön işleme ve özellik mühendisliği yapılmıştır
-- 3 farklı makine öğrenmesi algoritması eğitilmiş ve karşılaştırılmıştır
-- Model performansları detaylı metriklerle değerlendirilmiştir
-- Sonuçlar görsel raporlar ve Word dokümanı ile sunulmuştur
-- İnteraktif bir **web arayüzü** (Streamlit) geliştirilmiştir
+Projede yaptıklarım:
+- UCI'den gerçek hasta verisi aldım ve analiz ettim
+- Veriyi temizledim, eksikleri doldurdum
+- 3 farklı ML algoritması denedim ve karşılaştırdım
+- Model performanslarını değerlendirdim
+- Word raporu ve grafikler hazırladım
+- Streamlit ile **web arayüzü** yaptım
 
-Bu proje, veri bilimi projesi geliştirme sürecinin tüm aşamalarını (veri toplama, temizleme, modelleme, değerlendirme, görselleştirme ve deployment) kapsayan **end-to-end** bir çalışmadır.
+Veri toplama, temizleme, modelleme, değerlendirme, görselleştirme ve deployment - hepsini deneyimledim.
 
 ---
 
-## 🎯 Proje Aşamaları ve Metodoloji
+## 🎯 Ne Yaptım?
 
-### 1️⃣ Veri Toplama ve Keşif
-- UCI Machine Learning Repository'den **Heart Disease Dataset** indirildi
-- Kaggle platformundan alternatif versiyonlar incelendi
-- Veri seti 303 hasta kaydı ve 14 değişken içermektedir
-- İlk keşifsel veri analizi (EDA) yapılarak veri yapısı anlaşıldı
+### 1️⃣ Veri Toplama
+- UCI'den **Heart Disease Dataset** indirdim
+- Kaggle'dan da baktım alternatif versiyonlara
+- 303 hasta, 14 değişken var
+- İlk EDA yaparak veriyi tanıdım
 
-### 2️⃣ Veri Ön İşleme (`preprocess.py`)
-**Yapılan İşlemler:**
-- **Eksik Veri Kontrolü:** Median ve mode değerleri ile dolduruldu
-- **Aykırı Değer Tespiti:** IQR (Interquartile Range) yöntemi kullanıldı
-- **Kategorik Değişkenler:** Label Encoding ile sayısallaştırıldı
-- **Ölçeklendirme:** MinMaxScaler ile 0-1 arasına normalize edildi
-- **Train-Test Ayrımı:** %80 eğitim, %20 test verisi olarak ayrıldı
+### 2️⃣ Veri Temizleme (`preprocess.py`)
+**Yaptığım işlemler:**
+- Eksik verileri median/mode ile doldurdum
+- IQR yöntemiyle aykırı değerleri buldum
+- Kategorik değişkenleri encode ettim
+- MinMaxScaler ile 0-1 arası normalize ettim
+- %80 train, %20 test ayırdım
 
 **Kullanılan Teknikler:**
 ```python
@@ -48,7 +47,7 @@ Bu proje, veri bilimi projesi geliştirme sürecinin tüm aşamalarını (veri t
 ```
 
 ### 3️⃣ Model Eğitimi (`train_models.py`)
-Üç farklı makine öğrenmesi algoritması **GridSearchCV** ile optimize edildi:
+3 algoritma denedim, **GridSearchCV** ile en iyi parametreleri buldum:
 
 **A) Logistic Regression**
 - Regularizasyon parametresi: C = [0.01, 0.1, 1]
@@ -65,108 +64,122 @@ Bu proje, veri bilimi projesi geliştirme sürecinin tüm aşamalarını (veri t
 - Metrik: Euclidean distance
 - Ağırlıklandırma: uniform
 
-**Optimizasyon Detayları:**
-- Cross-Validation: 3-fold CV
-- Scoring Metric: F1-Score (dengesiz veri seti için uygun)
-- En iyi hiperparametreler otomatik seçildi
+**Nasıl Optimize Ettim:**
+- 3-fold Cross-Validation kullandım
+- F1-Score'a göre seçtim (dengesiz veri için uygun)
+- En iyi parametreler otomatik bulundu
 
-### 4️⃣ Model Değerlendirmesi (`evaluate.py`)
-Her model için kapsamlı performans analizi yapıldı:
+### 4️⃣ Model Değerlendirme (`evaluate.py`)
+Her model için performans analizi yaptım:
 
-**Kullanılan Metrikler:**
-- **Accuracy:** Genel doğruluk oranı
-- **Precision:** Pozitif tahminlerin doğruluğu
-- **Recall:** Gerçek pozitifleri bulma oranı
-- **F1-Score:** Precision ve Recall'un harmonik ortalaması
-- **AUC-ROC:** Sınıflandırma eğrisi altındaki alan
+**Kullandığım Metrikler:**
+- **Accuracy:** Genel doğruluk
+- **Precision:** Pozitif tahmin doğruluğu
+- **Recall:** Gerçek pozitifleri bulma
+- **F1-Score:** Precision ve Recall ortalaması
+- **AUC-ROC:** Sınıflandırma performansı
 
-**Görselleştirmeler:**
-- Confusion Matrix: Her model için
-- ROC Curve: AUC skorları ile
-- Feature Correlation Heatmap
-- Class Distribution Charts
-- Boxplots: Aykırı değer analizi
+**Grafikler:**
+- Confusion Matrix
+- ROC Curve
+- Korelasyon haritası
+- Sınıf dağılımları
+- Boxplot'lar
 
-### 5️⃣ Raporlama (`report_generator.py`)
-Python-docx kullanılarak **profesyonel Word raporu** oluşturuldu:
-- Proje özeti ve metodoloji
-- Model performans tablosu
-- Tüm görselleştirmeler embedded
-- Sonuç ve öneriler bölümü
+### 5️⃣ Rapor Hazırlama (`report_generator.py`)
+Python-docx ile Word raporu oluşturdum:
+- Proje özeti
+- Performans tablosu
+- Tüm grafikler
+- Sonuç ve öneriler
 
-### 6️⃣ Web Arayüzü Geliştirme (`app.py`)
-**Streamlit** framework'ü ile modern web uygulaması geliştirildi:
+### 6️⃣ Web Arayüzü (`app.py`)
+**Streamlit** ile modern web uygulaması yaptım:
 
 **Özellikler:**
-- 🏠 **Ana Sayfa:** Proje özeti, istatistikler
+- 🏠 **Ana Sayfa:** Proje özeti, istatistikler ve model karşılaştırma paneli
+  - Metrik kartları (3 modelin performans göstergeleri)
+  - İnteraktif model karşılaştırma dashboard'u
+  - Bar chart ve heatmap görselleştirmeleri
+  
 - 📊 **Veri Analizi:** İnteraktif Plotly grafikleri
   - Yaş dağılımı histogramları
   - Kolesterol ve kalp atışı boxplotları
   - Korelasyon ısı haritası
-- 🤖 **Model Performansı:** Karşılaştırmalı analiz
-  - Metrik karşılaştırma tablosu
-  - Bar chart ve radar chart
-  - Confusion matrix ve ROC curve görselleri
-- 🔮 **Tahmin Yap:** Gerçek zamanlı risk hesaplama
-  - 13 parametre girişi (slider, selectbox)
-  - Eğitilmiş model ile anlık tahmin
+  - 4 tab'lı detaylı keşifsel veri analizi
+  
+- 🤖 **Model Performansı:** Kapsamlı model analizi ve yorumlanabilirlik
+  - **Feature Importance:** Hangi özelliklerin modeli etkilediğini gösteren analiz
+  - **Learning Curves:** Model performansının eğitim verisi miktarıyla değişimini gösteren grafikler
+  - **Validation Curves:** Hiperparametre optimizasyonu için doğrulama eğrileri
+  - Confusion matrix ve ROC curve görselleri (3 model için)
+  - Metrik karşılaştırma tabloları
+  
+- 🔮 **Tahmin Yap:** Gerçek zamanlı risk hesaplama ve LIME ile açıklama
+  - 13 parametre girişi (slider, selectbox ile kolay kullanım)
+  - Model ile anlık tahmin
   - Risk yüzdesi gösterimi
+  - **LIME:** Her tahminin hangi özelliklerden etkilendiğini gösteriyor
+  - **Tahmin Geçmişi:** Yapılan tahminlerin kaydı ve istatistikleri
+  
 - ℹ️ **Hakkında:** Proje detayları ve iletişim
 
-**Teknik Detaylar:**
-- Responsive tasarım (geniş ekran desteği)
-- Custom CSS ile profesyonel görünüm
-- Caching ile hızlı performans
-- Session state yönetimi
+**Teknik Özellikler:**
+- Modern gradient tasarımı yaptım
+- Responsive - her ekranda çalışıyor
+- Custom CSS ile güzel görünüm
+- Caching ile hızlı (@st.cache_data, @st.cache_resource)
+- Session state - tahmin geçmişi için
+- İnteraktif Plotly grafikleri
 
 ---
 
-## 📊 Veri Seti Detayları
+## 📊 Kullandığım Veri
 
-**Heart Disease UCI Dataset**
+**Heart Disease UCI Verisi**
 - **Kaynak:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)
-- **Alternatif:** Kaggle Heart Disease Dataset
-- **Toplam Kayıt:** 303 hasta verisi
-- **Özellik Sayısı:** 13 bağımsız değişken + 1 hedef değişken
-- **Veri Tipi:** Karma (Sayısal + Kategorik)
-- **Eksik Veri:** Minimal (ön işleme ile temizlendi)
+- **Alternatif:** Kaggle'dan da indirdim
+- **Kayıt Sayısı:** 303 hasta
+- **Özellik:** 13 bağımsız değişken + 1 hedef
+- **Tip:** Sayısal + Kategorik karışık
+- **Eksik Veri:** Minimal (temizledim)
 - **Sınıf Dağılımı:** Dengeli (0: 138, 1: 165)
 
-### 📋 Değişken Açıklamaları:
+### 📋 Değişkenler:
 
-| Değişken | Açıklama | Tip | Değer Aralığı |
-|----------|----------|-----|---------------|
-| **age** | Hastanın yaşı | Sayısal | 29-77 |
-| **sex** | Cinsiyet | Kategorik | 0 = Kadın, 1 = Erkek |
-| **cp** | Göğüs ağrısı tipi | Kategorik | 0-3 (Tipik anjina, Atipik, Anjina dışı, Asemptomatik) |
-| **trestbps** | Dinlenme kan basıncı (mm Hg) | Sayısal | 94-200 |
-| **chol** | Serum kolesterol (mg/dl) | Sayısal | 126-564 |
-| **fbs** | Açlık kan şekeri > 120 mg/dl | İkili | 0 = Hayır, 1 = Evet |
-| **restecg** | Dinlenme EKG sonuçları | Kategorik | 0 = Normal, 1 = ST-T anormalliği, 2 = LVH |
-| **thalach** | Maksimum kalp atış hızı | Sayısal | 71-202 |
-| **exang** | Egzersiz kaynaklı anjina | İkili | 0 = Hayır, 1 = Evet |
+| Değişken | Açıklama | Tip | Değerler |
+|----------|----------|-----|----------|
+| **age** | Yaş | Sayısal | 29-77 |
+| **sex** | Cinsiyet | Kategorik | 0=Kadın, 1=Erkek |
+| **cp** | Göğüs ağrısı tipi | Kategorik | 0-3 |
+| **trestbps** | Dinlenme kan basıncı | Sayısal | 94-200 mm Hg |
+| **chol** | Kolesterol | Sayısal | 126-564 mg/dl |
+| **fbs** | Açlık şekeri > 120 | İkili | 0=Hayır, 1=Evet |
+| **restecg** | EKG sonuçları | Kategorik | 0-2 |
+| **thalach** | Max kalp atışı | Sayısal | 71-202 |
+| **exang** | Egzersiz anjinası | İkili | 0=Hayır, 1=Evet |
 | **oldpeak** | ST depresyonu | Sayısal | 0-6.2 |
-| **slope** | ST segment eğimi | Kategorik | 0 = Yükseliyor, 1 = Düz, 2 = İniyor |
-| **ca** | Floroskopi ile görülen ana damar sayısı | Sayısal | 0-3 |
-| **thal** | Talassemi | Kategorik | 1 = Normal, 2 = Sabit defekt, 3 = Geri döndürülebilir |
-| **target** | Kalp hastalığı varlığı (HEDEF) | İkili | 0 = Sağlıklı, 1 = Hasta |
+| **slope** | ST eğimi | Kategorik | 0-2 |
+| **ca** | Ana damar sayısı | Sayısal | 0-3 |
+| **thal** | Talassemi | Kategorik | 1-3 |
+| **target** | Kalp hastalığı | İkili | 0=Sağlıklı, 1=Hasta |
 
-### 🔍 Keşifsel Veri Analizi (EDA) Bulguları:
+### 🔍 Veri Analizinden Bulduklarım:
 
-**Demografik Analizler:**
-- Yaş ortalaması: 54.4 ± 9.1 yıl
-- Erkek hastaların oranı: %68.3
-- En yaygın göğüs ağrısı: Asemptomatik (%47.2)
+**Demografik:**
+- Ortalama yaş: 54.4 ± 9.1
+- Erkek oranı: %68.3
+- En yaygın ağrı: Asemptomatik (%47.2)
 
 **Risk Faktörleri:**
-- Yüksek kolesterol ortalaması: 246.7 mg/dl
+- Ortalama kolesterol: 246.7 mg/dl
 - Ortalama max kalp atışı: 149.6 bpm
-- %33.3'ünde egzersiz anjinası mevcut
+- Egzersiz anjinası: %33.3
 
-**Korelasyon Analizi:**
-- En güçlü pozitif korelasyon: `cp` (göğüs ağrısı tipi) ile target (0.43)
-- En güçlü negatif korelasyon: `oldpeak` (ST depresyonu) ile target (-0.43)
-- Yaş ile kalp atışı arasında negatif korelasyon (-0.39)
+**Korelasyonlar:**
+- En güçlü pozitif: `cp` ile target (0.43)
+- En güçlü negatif: `oldpeak` ile target (-0.43)
+- Yaş ile kalp atışı: Negatif (-0.39)
 
 ---
 
@@ -200,22 +213,22 @@ Python-docx kullanılarak **profesyonel Word raporu** oluşturuldu:
 - **Git** - Versiyon kontrolü
 - **PowerShell** - Terminal
 
-### **Neden Bu Teknolojiler Seçildi?**
+### **Neden Bu Kütüphaneleri Kullandım?**
 
 1. **Scikit-learn:** 
-   - Kapsamlı ML algoritma kütüphanesi
-   - Kolay hiperparametre optimizasyonu (GridSearchCV)
-   - İyi dokümante edilmiş
+   - Çoğu ML algoritması var
+   - GridSearchCV çok kullanışlı
+   - Dokümantasyonu iyi
 
 2. **Streamlit:**
-   - Python ile kolay web geliştirme
-   - Data science projeleri için optimize
-   - Ücretsiz deployment (Streamlit Cloud)
+   - Python ile web sayfası yapmak kolay
+   - Özellikle veri bilimi projeleri için iyi
+   - Ücretsiz yayınlayabiliyorsun
 
 3. **Plotly:**
-   - İnteraktif grafikler
-   - Modern ve profesyonel görünüm
-   - Zoom, pan, hover özellikli
+   - Grafikler interaktif oluyor
+   - Modern görünüm
+   - Kullanıcı zoom, hover yapabiliyor
 
 ---
 
@@ -223,66 +236,66 @@ Python-docx kullanılarak **profesyonel Word raporu** oluşturuldu:
 
 ### **1. Logistic Regression (Lojistik Regresyon)** ⭐ EN İYİ MODEL
 
-**Çalışma Prensibi:**
-- İkili sınıflandırma için klasik algoritma
-- Sigmoid fonksiyonu ile olasılık hesabı
-- Doğrusal karar sınırı oluşturur
+**Nasıl Çalışıyor:**
+- İkili sınıflandırma için klasik yöntem
+- Sigmoid fonksiyonu kullanıyor
+- Doğrusal bir karar sınırı çiziyor
 
-**Hiperparametreler:**
+**Parametreler:**
 ```python
 param_grid = {
-    'C': [0.01, 0.1, 1],        # Regularizasyon gücü
-    'solver': ['liblinear'],     # Optimizasyon algoritması
-    'max_iter': [1000]           # Maksimum iterasyon
+    'C': [0.01, 0.1, 1],        # Regularizasyon
+    'solver': ['liblinear'],     # Optimizasyon
+    'max_iter': [1000]           # Max iterasyon
 }
 ```
 
-**Seçilme Nedeni:**
-- Basit ve yorumlanabilir
-- Hızlı eğitim süresi
-- İkili sınıflandırmada güçlü
+**Neden En İyi:**
+- Basit ve anlaşılır
+- Hızlı eğitiliyor
+- İkili sınıflandırmada başarılı
 
 **Performans:**
-- Cross-Validation F1: 0.6757
-- Test Accuracy: 60.0%
+- F1-Score: 0.6757
+- Accuracy: 60.0%
 - AUC-ROC: 0.5895
 
 ---
 
 ### **2. Random Forest (Rastgele Orman)**
 
-**Çalışma Prensibi:**
-- Ensemble learning (topluluk öğrenmesi)
-- Birden fazla karar ağacının birleşimi
-- Bagging yöntemi ile overfitting önleme
+**Nasıl Çalışıyor:**
+- Birden fazla karar ağacı kullanıyor
+- Hepsinin oyunu birleştiriyor
+- Bagging ile overfitting'i engelliyor
 
-**Hiperparametreler:**
+**Parametreler:**
 ```python
 param_grid = {
-    'n_estimators': [50, 100],      # Ağaç sayısı
+    'n_estimators': [50, 100],      # Kaç ağaç
     'max_depth': [None, 10, 20],    # Ağaç derinliği
-    'random_state': [42]             # Tekrarlanabilirlik
+    'random_state': [42]             # Random seed
 }
 ```
 
-**Avantajları:**
-- Feature importance hesaplayabilir
-- Non-linear ilişkileri yakalayabilir
-- Outlier'lara dayanıklı
+**Artıları:**
+- Hangi özellikler önemli görebiliyorsun
+- Non-linear ilişkileri yakalıyor
+- Aykırı değerlere dayanıklı
 
 **Performans:**
-- Cross-Validation F1: 0.5789
-- Test Accuracy: 56.7%
+- F1-Score: 0.5789
+- Accuracy: 56.7%
 - AUC-ROC: 0.5106
 
 ---
 
 ### **3. K-Nearest Neighbors (KNN)**
 
-**Çalışma Prensibi:**
-- Instance-based learning
-- En yakın k komşuya göre sınıflandırma
-- Euclidean mesafe hesabı
+**Nasıl Çalışıyor:**
+- En yakın k komşuya bakıyor
+- Mesafeye göre sınıflandırıyor
+- Euclidean distance kullanıyor
 
 **Hiperparametreler:**
 ```python
@@ -398,7 +411,7 @@ veribilimiproje/
 - `requirements_app.txt`: Web arayüzü için ek kütüphaneler
 
 **Çıktı Dosyaları:**
-- `best_model.pkl`: Joblib ile kaydedilmiş eğitilmiş model (Random Forest)
+- `best_model.pkl`: Joblib ile kaydettim (Logistic Regression)
 - `metrics_table.csv`: Tüm modellerin performans metrikleri
 - `Final_Rapor_Heart_Disease.docx`: Kapsamlı proje raporu
 - PNG dosyaları: Görselleştirmeler (11 adet)
@@ -408,7 +421,7 @@ veribilimiproje/
 ## 🚀 Kurulum ve Çalıştırma Adımları
 
 ### ⚙️ Sistem Gereksinimleri:
-- **Python:** 3.10 veya üzeri (Proje 3.13.7 ile geliştirildi)
+- **Python:** 3.10 veya üzeri (Ben 3.13.7 kullandım)
 - **İşletim Sistemi:** Windows / macOS / Linux
 - **RAM:** Minimum 4GB (8GB önerilir)
 - **Disk:** 500MB boş alan
@@ -561,10 +574,10 @@ lower_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
 ```
 - `age`, `trestbps`, `chol`, `thalach`, `oldpeak` için uygulandı
-- Tespit edilen aykırı değerler cap edildi (sınırlandırıldı)
+- Aykırı değerleri buldum ve cap ettim (sınırlandırdım)
 
 **4. Kategorik Encoding:**
-- **Label Encoding** kullanıldı (`sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`)
+- **Label Encoding** yaptım (`sex`, `cp`, `fbs`, `restecg`, `exang`, `slope`, `ca`, `thal`)
 - One-Hot Encoding kullanılmadı (çok fazla boyut artışı yaratmaz için)
 
 **5. Feature Scaling:**
@@ -585,7 +598,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 ### 🤖 Model Eğitimi Detayları
 
 **Hiperparametre Optimizasyonu:**
-- **GridSearchCV** kullanıldı (tüm kombinasyonları dener)
+- **GridSearchCV** kullandım (tüm kombinasyonları dener)
 - **3-Fold Cross Validation** (eğitim setini 3'e böler, 2'si eğitim 1'i validasyon)
 - **Scoring Metric:** F1-Score (dengesiz veri için uygun)
 - **n_jobs:** -1 (tüm CPU core'ları kullan)
@@ -675,7 +688,20 @@ AUC = ROC eğrisi altındaki alan (0.5-1.0 arası)
 
 ### 🔍 Özellik Önem Analizi (Feature Importance)
 
-**En Önemli Risk Faktörleri** (Logistic Regression katsayılarına göre):
+Projenin en önemli kısımlarından biri **model yorumlanabilirliği** oldu. Sadece tahmin yapmak değil, neden bu tahmini yaptığını anlamak da önemliydi.
+
+**Feature Importance Analizi:**
+- Logistic Regression'ın katsayıları incelenerek hangi özelliklerin modeli nasıl etkilediğini görselleştirdim
+- İnteraktif bar chart ile 13 özelliğin göreceli önemini gösterdim
+- Pozitif katsayılar risk artışını, negatif katsayılar risk azalışını gösteriyor
+
+**LIME ile Açıklanabilir AI:**
+- Her bireysel tahmin için LIME (Local Interpretable Model-agnostic Explanations) kullandım
+- Hastaya özel sonuçlar: Hangi faktörler bu kişi için riski artırıyor/azaltıyor?
+- Yeşil barlar risk artıran, kırmızı barlar risk azaltan faktörleri gösteriyor
+- Bu özellik sayesinde doktorlar modelin kararını anlayıp güvenebilir
+
+**En Önemli Risk Faktörleri** (önem sırasına göre):
 
 | Sıra | Özellik | Etki | Yorumlama |
 |------|---------|------|-----------|
@@ -685,6 +711,11 @@ AUC = ROC eğrisi altındaki alan (0.5-1.0 arası)
 | 4 | `ca` (Ana damar sayısı) | +++ | Tıkalı damar sayısı ile doğru orantılı |
 | 5 | `sex` (Cinsiyet) | ++ | Erkeklerde risk daha yüksek |
 | 6 | `age` (Yaş) | ++ | Yaş arttıkça risk artıyor |
+
+**Learning ve Validation Curves:**
+- Modelin eğitim verisi miktarıyla performansının nasıl değiştiğini analiz ettim
+- Validation curves ile hiperparametre C'nin etkisini görselleştirdim  
+- Bu analizler sayesinde modelin yeterli veri ile eğitildiğini doğruladım
 
 **EDA'dan Elde Edilen Önemli Bulgular:**
 
@@ -762,31 +793,43 @@ AUC = ROC eğrisi altındaki alan (0.5-1.0 arası)
 
 ✅ **End-to-end ML Pipeline:** Veri toplama → Model → Deployment  
 ✅ **Kapsamlı EDA:** Görselleştirmeler ve istatistiksel analizler  
-✅ **Model Karşılaştırması:** 3 farklı algoritma optimize edildi  
-✅ **Profesyonel Raporlama:** Word raporu + Web arayüzü  
-✅ **Reprodusibility:** Tüm kod paylaşılabilir ve tekrarlanabilir  
-✅ **Deployment:** Streamlit ile canlı demo  
+✅ **Model Karşılaştırması:** 3 farklı algoritma denedim ve optimize ettim  
+✅ **Profesyonel Raporlama:** Word raporu + Modern web arayüzü  
+✅ **Model Yorumlanabilirliği:** Feature Importance + LIME explainability  
+✅ **İleri Seviye Analizler:** Learning curves, validation curves, model comparison dashboard  
+✅ **Kullanıcı Deneyimi:** Session state ile tahmin geçmişi takibi  
+✅ Proje Boyunca Öğrendiklerim:**
 
-**Öğrenilenler:**
+Bu proje gerçekten çok şey öğretti. Sadece kod yazmaktan çok daha fazlasıydı:
 
 1. 📚 **Teknik Beceriler:**
-   - Python ile veri bilimi projesi geliştirme
-   - Scikit-learn ile model eğitimi ve optimizasyonu
-   - Streamlit ile web uygulaması geliştirme
-   - Git ile versiyon kontrolü
+   - Python ile profesyonel veri bilimi projesi geliştirdim
+   - Scikit-learn'ün detaylarını öğrendim (GridSearchCV, pipeline, metrics)
+   - Streamlit ile interaktif web uygulaması yaptım - ilk defa bir projeyi deployment yaptım
+   - LIME kütüphanesi ile explainable AI deneyimledim
+   - Plotly ile interaktif grafikler oluşturmayı öğrendim
+   - Session state yönetimini öğrendim (tahmin geçmişi için)
+   - CSS ile modern web tasarımı yaptım
 
 2. 🔬 **Domain Knowledge:**
-   - Kalp hastalığı risk faktörleri
-   - Tıbbi veri setleri ile çalışma
-   - EKG ve klinik parametrelerin yorumlanması
+   - Kalp hastalıklarının risk faktörlerini detaylı öğrendim
+   - Tıbbi veri setleriyle çalışmanın özel gereksinimleri (privacy, accuracy)
+   - EKG parametreleri ve klinik değerlerin anlamını anladım
+   - Feature importance'ın medikal karar destek sistemlerindeki önemini gördüm
 
 3. 🧠 **Makine Öğrenmesi:**
-   - Hiperparametre optimizasyonu
-   - Cross-validation teknikleri
-   - Model değerlendirme metrikleri
-   - Overfitting/Underfitting dengesi
+   - GridSearchCV ile sistematik hiperparametre optimizasyonu
+   - Cross-validation'ın neden kritik olduğunu anladım
+   - Metrik seçiminin önemini kavradım (accuracy yeterli değil!)
+   - Learning curves ile modelin durumunu analiz etmeyi öğrendim
+   - Validation curves ile hiperparametre etkilerini görselleştirdim
+   - Explainable AI'ın gerçek değerini gördüm (LIME sayesinde)
 
-4. 💼 **Soft Skills:**
+4. 💼 **Proje Yönetimi:**
+   - Modüler kod yazmanın faydalarını gördüm (bakım kolaylığı)
+   - Git ile düzenli commit atmayı öğrendim
+   - README ve dokümantasyon yazmanın önemini anladım
+   - Zaman planlaması ve iş bölümü yaptım
    - Proje planlama ve zaman yönetimi
    - Dokümantasyon yazma
    - Sonuçları görselleştirme ve sunma
@@ -835,18 +878,18 @@ AUC = ROC eğrisi altındaki alan (0.5-1.0 arası)
 
 **🔗 Proje Linkleri:**
 - GitHub Repository: https://github.com/frhtbytms/kalp-hastaligi-tahmin-projesi
-- Streamlit Demo: [Deploy edildiğinde eklenecek]
+- Streamlit Demo: [Henüz deploy etmedim]
 - Kaggle Notebook: [İsteğe bağlı]
 
 ---
 
 ## 🙏 Teşekkürler
 
-Bu projenin geliştirilmesinde:
-- 👨‍🏫 Değerli hocama rehberliği için
-- 📊 UCI ML Repository ekibine veri setini paylaştıkları için
-- 🐍 Python ve open-source topluluğuna katkılarından dolayı
-- 👥 Sınıf arkadaşlarıma destekleri için
+Projeyi geliştirirken yardımcı olanlar:
+- 👨‍🏫 Hocama rehberliği için
+- 📊 UCI ML Repository - veri seti için
+- 🐍 Python ve open-source topluluğu
+- 👥 Arkadaşlarıma destekleri için
 
 teşekkür ederim.
 
@@ -854,10 +897,10 @@ teşekkür ederim.
 
 ## 📄 Lisans ve Sorumluluk Reddi
 
-**Lisans:** Bu proje **eğitim amaçlı** hazırlanmıştır.
+**Lisans:** Eğitim amaçlı yaptım.
 
-**⚠️ Sorumluluk Reddi:**  
-> Bu yazılım eğitim amaçlıdır ve tıbbi tavsiye yerine geçmez. Kalp sağlığınız hakkında endişeleriniz varsa mutlaka bir doktora danışın. Bu aracın kullanımından kaynaklanan herhangi bir zarardan geliştirici sorumlu tutulamaz.
+**⚠️ Uyarı:**  
+> Bu eğitim projesi, tıbbi tavsiye yerine geçmez. Kalp sağlığınız hakkında endişeleriniz varsa mutlaka doktora danışın.
 
 **Kullanım Koşulları:**
 - ✅ Akademik ve eğitim amaçlı kullanım serbest

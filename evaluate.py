@@ -1,22 +1,11 @@
 """
-Model Değerlendirme ve Görselleştirme Modülü
-Kalp Hastalığı Tahmini Projesi
+Model Değerlendirme
+Performans metrikleri ve grafikler
 
-Bu modül, eğitilmiş modellerin performansını değerlendirir ve görselleştirir.
+Confusion matrix, ROC curve, korelasyon analizi
+Sonuçları PNG ve CSV olarak kaydediyorum
 
-Özellikler:
-- Performans metrikleri hesaplama (Accuracy, Precision, Recall, F1, AUC)
-- Confusion Matrix oluşturma ve görselleştirme
-- ROC Curve çizimi
-- Korelasyon analizi
-- Veri dağılımı grafikleri
-
-Çıktılar:
-- metrics_table.csv: Model karşılaştırma tablosu
-- *.png: Görselleştirme dosyaları
-
-Geliştirici: Ferhat Bayutmuş
-Tarih: 17 Kasım 2025
+Ferhat Bayutmuş - 2025
 """
 
 import numpy as np

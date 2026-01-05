@@ -1,17 +1,11 @@
 """
-Kalp Hastalığı Risk Tahmin Sistemi
-Makine Öğrenmesi ile Kalp Hastalığı Tahmini
+Kalp Hastalığı Tahmin Projesi - Ana Program
+Veri Bilimine Giriş Final Projesi
 
-Proje: Veri Bilimine Giriş Final Projesi
-Geliştirici: Ferhat Bayutmuş
-Okul: İstanbul Medeniyet Üniversitesi
-Tarih: 17 Kasım 2025
+UCI veri seti ile 3 ML algoritması kullanıyorum:
+Logistic Regression, Random Forest, KNN
 
-Açıklama:
-Bu proje, UCI Machine Learning Repository'den alınan kalp hastalığı veri setini
-kullanarak makine öğrenmesi modelleri ile kalp hastalığı riskini tahmin etmektedir.
-3 farklı algoritma (Logistic Regression, Random Forest, KNN) karşılaştırılmış ve
-en iyi performans gösteren model seçilmiştir.
+Ferhat Bayutmuş - İMÜ - 2025
 """
 
 import os

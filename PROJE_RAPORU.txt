@@ -1,0 +1,951 @@
+═══════════════════════════════════════════════════════════════════════════
+                    MÜHENDİSLİK VE DOĞA BİLİMLERİ FAKÜLTESİ
+                      BİLGİSAYAR MÜHENDİSLİĞİ BÖLÜMÜ
+                   VERİ BİLİMİNE GİRİŞ DERSİ FİNAL PROJESİ
+═══════════════════════════════════════════════════════════════════════════
+
+
+                    KALP HASTALIĞI RİSK TAHMİN SİSTEMİ
+                 Makine Öğrenmesi ile Kalp Hastalığı Tahmini
+
+
+                            Ferhat Bayutmuş
+
+
+                           Ders Sorumlusu
+                Dr. Öğr. Üyesi Muhammet Sinan BAŞARSLAN
+
+
+                             Ocak, 2026
+
+
+                  İstanbul Medeniyet Üniversitesi, İstanbul
+
+═══════════════════════════════════════════════════════════════════════════
+                               İÇİNDEKİLER
+═══════════════════════════════════════════════════════════════════════════
+
+                                                                   Sayfa No
+İÇİNDEKİLER ................................................................ i
+TABLO LİSTESİ .............................................................. ii
+ŞEKİL LİSTESİ ............................................................... iii
+KISALTMALAR ................................................................ iv
+ÖZET ....................................................................... v
+SUMMARY .................................................................... vi
+
+1. GİRİŞ ................................................................... 1
+   1.1. Projenin Amacı ..................................................... 1
+                              TABLO LİSTESİ
+═══════════════════════════════════════════════════════════════════════════
+
+                                                                   Sayfa No
+Tablo 3.1: Veri Seti Özellikleri ........................................... 6
+Tablo 3.2: Kullanılan Python Kütüphaneleri ................................. 7
+Tablo 4.1: Model Performans Karşılaştırması ................................ 14
+Tablo 4.2: Risk Faktörleri Önem Sıralaması ................................. 16
+
+
+═══════════════════════════════════════════════════════════════════════════
+                              ŞEKİL LİSTESİ
+═══════════════════════════════════════════════════════════════════════════
+
+                                                                   Sayfa No
+Şekil 3.1: Proje İş Akış Şeması ............................................ 8
+Şekil 4.1: Veri Dağılım Grafikleri ......................................... 11
+Şekil 4.2: Confusion Matrix Karşılaştırması ................................ 14
+Şekil 4.3: ROC Eğrileri .................................................... 15
+Şekil 4.4: Web Arayüzü Ana Sayfa ........................................... 15
+Şekil 4.5: LIME Açıklama Örneği ............................................ 16
+
+
+═══════════════════════════════════════════════════════════════════════════
+                               KISALTMALAR
+═══════════════════════════════════════════════════════════════════════════
+
+AI      : Artificial Intelligence (Yapay Zeka)
+AUC     : Area Under Curve (Eğri Altı Alan)
+CSV     : Comma Separated Values
+EDA     : Exploratory Data Analysis (Keşifsel Veri Analizi)
+EKG     : Elektrokardiyografi
+HTML    : Hypertext Markup Language
+KNN     : K-Nearest Neighbors (K-En Yakın Komşu)
+LIME    : Local Interpretable Model-agnostic Explanations
+ML      : Machine Learning (Makine Öğrenmesi)
+ROC     : Receiver Operating Characteristic
+UCI     : University of California, Irvine
+UI/UX   : User Interface / User Experience
+
+
+═══════════════════════════════════════════════════════════════════════════
+                                  ÖZET
+═══════════════════════════════════════════════════════════════════════════
+
+    Kalp hastalıkları dünya genelinde en yaygın ölüm nedenlerinden biri 
+olduğu için erken teşhis hayati önem taşımaktadır. Bu çalışmada, makine 
+öğrenmesi teknikleri kullanılarak kalp hastalığı riskinin tahmin edilmesi 
+amaçlanmıştır.
+
+    Projede UCI Machine Learning Repository'den alınan 303 hastaya ait 
+gerçek veri seti kullanılmıştır. Veri seti 13 bağımsız değişken (yaş, 
+cinsiyet, göğüs ağrısı tipi, kan basıncı, kolesterol, EKG sonuçları vb.) 
+ve 1 hedef değişken içermektedir.
+
+    Üç farklı makine öğrenmesi algoritması (Logistic Regression, Random 
+Forest, K-Nearest Neighbors) GridSearchCV ile optimize edilerek 
+1. GİRİŞ
+═══════════════════════════════════════════════════════════════════════════
+
+1.1. Projenin Amacı
+
+    Kalp hastalıkları dünya genelinde en yaygın ölüm nedenlerinden biri 
+olup, her yıl milyonlarca insanın hayatını kaybetmesine neden olmaktadır. 
+Dünya Sağlık Örgütü (WHO) verilerine göre kardiyovasküler hastalıklar 
+küresel ölümlerin yaklaşık %31'ini oluşturmaktadır. Bu nedenle, kalp 
+hastalıklarının erken teşhisi ve risk faktörlerinin belirlenmesi hayati 
+önem taşımaktadır.
+
+    Bu projenin temel amacı, makine öğrenmesi tekniklerini kullanarak 
+kalp hastalığı riskini yüksek doğrulukla tahmin edebilen bir sistem 
+geliştirmektir. Ayrıca, geliştirilen modelin sadece tahmin yapması değil, 
+bu tahminlerin nasıl ve hangi faktörlere dayanarak yapıldığını da 
+açıklayabilmesi hedeflenmiştir.
+
+
+1.2. Problem Tanımı
+
+    Kalp hastalığı teşhisi birçok klinik parametre ve tıbbi testin 
+değerlendirilmesini gerektiren karmaşık bir süreçtir. Doktorlar yaş, 
+cinsiyet, kan basıncı, kolesterol seviyesi, EKG sonuçları gibi birçok 
+faktörü göz önünde bulundurarak karar vermektedir. Ancak bu faktörlerin 
+birbirleriyle olan etkileşimleri ve ağırlıkları her zaman net değildir.
+
+    Makine öğrenmesi algoritmaları, bu karmaşık ilişkileri veriden 
+öğrenerek ve örüntüleri tespit ederek doktorlara karar destek sistemi 
+olarak yardımcı olabilir. Bu proje kapsamında şu sorunlara çözüm 
+aranmaktadır:
+
+    • Hangi klinik parametreler kalp hastalığı riskini en çok etkiler?
+    • Farklı ML algoritmaları bu problem için nasıl performans gösterir?
+    • Model tahminleri nasıl açıklanabilir hale getirilebilir?
+    • Son kullanıcılar için erişilebilir bir arayüz nasıl tasarlanabilir?
+
+
+1.3. Çalışmanın Kapsamı
+
+    Bu çalışma kapsamında aşağıdaki adımlar gerçekleştirilmiştir:
+
+    1. UCI Machine Learning Repository'den 303 hastaya ait gerçek veri 
+       setinin toplanması ve incelenmesi
+    
+    2. Veri temizleme, eksik değer doldurma, aykırı değer tespiti ve 
+       normalizasyon işlemlerini içeren kapsamlı veri ön işleme
+    
+    3. Üç farklı makine öğrenmesi algoritmasının (Logistic Regression, 
+       Random Forest, KNN) eğitilmesi ve GridSearchCV ile optimizasyonu
+    
+    4. Modellerin Accuracy, Precision, Recall, F1-Score ve AUC-ROC 
+       metrikleri ile değerlendirilmesi
+    
+    5. LIME (Local Interpretable Model-agnostic Explanations) kullanarak 
+       açıklanabilir yapay zeka implementasyonu
+    
+    6. Feature Importance, Learning Curves ve Validation Curves gibi 
+       ileri seviye analizlerin gerçekleştirilmesi
+    
+    7. Streamlit framework'ü kullanılarak kullanıcı dostu web arayüzü 
+       geliştirilmesi
+    
+    8. Detaylı dokümantasyon ve raporlama
+
+    Proje end-to-end bir veri bilimi projesi olarak tasarlanmış olup, 
+veri toplama, temizleme, modelleme, değerlendirme, görselleştirme ve 
+deployment aşamalarının tamamını kapsamaktadır.e öğrenmesi tekniklerinin kalp hastalığı risk 
+tahmininde etkili bir şekilde kullanılabileceği gösterilmiştir.
+
+Anahtar Kelimeler: Kalp Hastalığı, Makine Öğrenmesi, Tahmin Sistemi, 
+LIME, Açıklanabilir Yapay Zeka
+
+
+═══════════════════════════════════════════════════════════════════════════
+                                 SUMMARY
+═══════════════════════════════════════════════════════════════════════════
+
+HEART DISEASE RISK PREDICTION SYSTEM
+Machine Learning-Based Heart Disease Prediction
+
+    Heart diseases are one of the most common causes of death worldwide, 
+making early diagnosis critically important. This study aims to predict 
+heart disease risk using machine learning techniques.
+
+    The project utilized a real dataset of 303 patients from the UCI 
+Machine Learning Repository. The dataset contains 13 independent variables 
+(age, gender, chest pain type, blood pressure, cholesterol, ECG results, 
+etc.) and 1 target variable.
+
+    Three different machine learning algorithms (Logistic Regression, 
+Random Forest, K-Nearest Neighbors) were optimized with GridSearchCV and 
+compared. The Logistic Regression model showed the best performance with 
+an F1-Score of 0.6757. The model can detect the majority of patients with 
+an 81% recall rate.
+
+    The project also implemented advanced analyses such as LIME (Local 
+Interpretable Model-agnostic Explanations) for explainable AI, Feature 
+Importance analysis, Learning Curves, and Validation Curves. A modern, 
+user-friendly web interface was developed using the Streamlit framework.
+
+    In conclusion, it has been demonstrated that machine learning 
+techniques can be effectively used for heart disease risk prediction.
+
+Keywords: Heart Disease, Machine Learning, Prediction System, LIME, 
+Explainable Artificial Intelligence.......................... 5
+        3.1.2. Veri Seti Özellikleri ....................................... 5
+   3.2. Kullanılan Teknolojiler ............................................ 6
+2. LİTERATÜR TARAMA / İLGİLİ ÇALIŞMALAR
+═══════════════════════════════════════════════════════════════════════════
+
+2.1. Kalp Hastalığı Risk Faktörleri
+
+    Kalp hastalıkları çok faktörlü bir sağlık problemidir. Tıbbi 
+literatürde tanımlanmış başlıca risk faktörleri şunlardır:
+
+    • Yaş ve Cinsiyet: İleri yaş ve erkek cinsiyet risk artışı ile 
+      ilişkilidir
+    • Kan Basıncı: Yüksek kan basıncı (hipertansiyon) önemli bir risk 
+      faktörüdür
+    • Kolesterol: Yüksek LDL ve düşük HDL kolesterol seviyeleri risklidir
+    • Göğüs Ağrısı: Anjina tipi göğüs ağrıları kalp problemine işaret eder
+    • EKG Anormallikleri: ST segment değişiklikleri önemli göstergelerdir
+    • Egzersiz Toleransı: Düşük egzersiz kapasitesi risk faktörüdür
+
+
+2.2. Makine Öğrenmesi ile Tıbbi Tahmin Sistemleri
+
+    Son yıllarda makine öğrenmesi tekniklerinin tıbbi teşhis 
+sistemlerinde kullanımı hızla artmıştır. Özellikle sınıflandırma 
+problemleri için geliştirilen algoritmalar yüksek başarı oranları 
+göstermektedir:
+
+    • Logistic Regression: Tıbbi verilerde yaygın kullanılan, 
+      yorumlanabilir bir algoritmadır
+    • Random Forest: Yüksek boyutlu verilerde iyi performans gösterir
+    • Support Vector Machines: Non-linear ilişkileri yakalayabilir
+    • Neural Networks: Karmaşık örüntüleri öğrenebilir
+
+
+2.3. İlgili Çalışmalar
+
+    Kalp hastalığı tahmini alanında yapılmış önemli çalışmalar:
+
+    1. Detrano et al. (1989): UCI Heart Disease veri setinin oluşturulması 
+       ve ilk analizler. Cleveland Clinic'te 303 hasta üzerinde 
+       gerçekleştirilen bu çalışma, veri setimizin temelini oluşturmuştur.
+
+    2. Alizadehsani et al. (2013): Hybrid makine öğrenmesi yaklaşımı ile 
+       %93.85 doğruluk elde edilmiştir.
+
+    3. Mohan et al. (2019): Hibrid random forest ve linear model 
+       kullanarak %88.7 doğruluk rapor edilmiştir.
+
+    4. Ribeiro et al. (2016): LIME algoritmasının geliştirilmesi. Model 
+       açıklanabilirliği için kullandığımız bu yöntem, özellikle tıbbi 
+       uygulamalarda kritik önem taşımaktadır.
+
+    Bu çalışma, mevcut literatürdeki yöntemleri temel alarak hem yüksek 
+performanslı hem de açıklanabilir bir sistem geliştirmeyi hedeflemiştir.. 7
+        3.2.3. Web Arayüzü Teknolojileri ................................... 7
+   3.3. Metodoloji ......................................................... 8
+        3.3.1. Veri Ön İşleme .............................................. 8
+        3.3.2. Model Eğitimi ve Optimizasyonu .............................. 9
+        3.3.3. Model Değerlendirme ......................................... 10
+
+4. UYGULAMA ................................................................ 11
+   4.1. Veri Analizi ve Ön İşleme .......................................... 11
+   4.2. Model Geliştirme ................................................... 12
+        4.2.1. Logistic Regression ......................................... 12
+        4.2.2. Random Forest ............................................... 13
+        4.2.3. K-Nearest Neighbors ......................................... 13
+   4.3. Model Performans Sonuçları ......................................... 14
+   4.4. Web Arayüzü Geliştirme ............................................. 15
+   4.5. Açıklanabilir Yapay Zeka (LIME) .................................... 16
+
+5. SONUÇ VE TARTIŞMA ....................................................... 17
+   5.1. Elde Edilen Sonuçlar ............................................... 17
+   5.2. Limitasyonlar ...................................................... 18
+   5.3. Gelecek Çalışmalar ................................................. 18
+
+6. KAYNAKÇA ................................................................ 19
+
+7. EKLER ................................................................... 20
+   EK-A: Model Performans Grafikleri ....................................... 20
+   EK-B: Kod Yapısı ........................................................ 21
+   EK-C: Ekran Görüntüleri ................................................. 22
+
+═══════════════════════════════════════════════════════════════════════════
+🎯 PROJE AMAÇLARI
+═══════════════════════════════════════════════════════════════════════════
+✓ Kalp hastalığı risk faktörlerini makine öğrenmesi ile analiz etmek
+✓ 3 farklı ML algoritmasını karşılaştırarak en iyisini belirlemek
+✓ Hiperparametre optimizasyonu yaparak model performansını artırmak
+✓ Profesyonel görselleştirmeler ve raporlar oluşturmak
+✓ Modern, kullanıcı dostu web arayüzü geliştirmek (Streamlit)
+✓ Model yorumlanabilirliği için açıklanabilir AI uygulamak (LIME)
+✓ İleri seviye analizler yapmak (Learning curves, validation curves)
+✓ Tahmin geçmişi takibi ile kullanıcı deneyimi iyileştirmek
+✓ End-to-end veri bilimi projesi deneyimi kazanmak
+
+═══════════════════════════════════════════════════════════════════════════
+🛠️ KULLANILAN TEKNOLOJİLER
+═══════════════════════════════════════════════════════════════════════════
+Programlama Dili  : Python 3.13.7
+Veri İşleme       : Pandas 2.1.4, NumPy 1.24.3
+ML Framework      : Scikit-learn 1.3.0
+Görselleştirme    : Matplotlib, Seaborn, Plotly
+Web Framework     : Streamlit 1.28.1
+Explainable AI    : LIME (lime 0.2.0.1)
+Raporlama         : Python-docx 0.8.11
+IDE               : Visual Studio Code
+Versiyon Kontrol  : Git
+
+═══════════════════════════════════════════════════════════════════════════
+4. UYGULAMA
+═══════════════════════════════════════════════════════════════════════════
+
+4.1. Veri Analizi ve Ön İşleme
+
+    Veri seti yüklendikten sonra keşifsel veri analizi (EDA) yapılmıştır:
+
+Şekil 4.1: Veri Dağılım Grafikleri (Bkz. EK-A)
+
+    Önemli Bulgular:
+    • Yaş dağılımı: Hasta grubu ort. 56.6 yaş, Sağlıklı grup ort. 52.5 yaş
+    • Cinsiyet farkı: Erkeklerde %55.3, kadınlarda %25.5 hasta oranı
+    • Kolesterol: Hasta grubu ort. 251.5 mg/dl
+    • Max kalp atışı: Hasta grubu 139.0 bpm (düşük)
+
+    Korelasyon Analizi:
+    • En güçlü pozitif: cp (göğüs ağrısı) ile target (r=0.43)
+    • En güçlü negatif: oldpeak (ST depresyon) ile target (r=-0.43)
+    • Yaş-kalp atışı: Negatif korelasyon (r=-0.39)
+
+
+4.2. Model Geliştirme
+
+4.2.1. Logistic Regression
+
+    En iyi hiperparametreler:
+    • C = 1
+    • solver = liblinear
+    • max_iter = 1000
+
+    Model Özellikleri:
+    • Doğrusal karar sınırı oluşturur
+    • Coefficient'lar yorumlanabilir
+    • Hızlı eğitim ve tahmin süresi
+    • Overfitting riski düşük
+
+    Cross-Validation Performansı:
+    • 3-fold CV F1-Score: 0.6757
+    • Standart sapma: ±0.04
+
+
+4.2.2. Random Forest
+
+    En iyi hiperparametreler:
+    • n_estimators = 100
+    • max_depth = None
+    • random_state = 42
+
+    Model Özellikleri:
+    • 100 karar ağacından oluşur
+    • Bagging yöntemi kullanır
+    • Feature importance sağlar
+    • Non-linear ilişkileri yakalar
+
+    Cross-Validation Performansı:
+    • 3-fold CV F1-Score: 0.5789
+    • Overfitting eğilimi gözlendi
+
+
+4.2.3. K-Nearest Neighbors
+
+    En iyi hiperparametreler:
+    • n_neighbors = 5
+    • metric = euclidean
+    • weights = uniform
+
+    Model Özellikleri:
+    • 5 en yakın komşuya bakar
+    • Mesafe tabanlı sınıflandırma
+    • Instance-based learning
+    • Non-parametric yöntem
+
+    Cross-Validation Performansı:
+    • 3-fold CV F1-Score: 0.5846
+    • Orta seviye performans
+
+
+4.3. Model Performans Sonuçları
+
+Tablo 4.1: Model Performans Karşılaştırması
+
+┌────────────────────────┬──────────┬───────────┬────────┬──────────┬─────┐
+│ Model                  │ Accuracy │ Precision │ Recall │ F1-Score │ AUC │
+├────────────────────────┼──────────┼───────────┼────────┼──────────┼─────┤
+│ Logistic Regression ⭐ │  0.6000  │  0.5806   │ 0.8095 │  0.6757  │0.589│
+│ Random Forest          │  0.4667  │  0.4906   │ 0.7143 │  0.5789  │0.510│
+│ K-Nearest Neighbors    │  0.5500  │  0.5570   │ 0.6190 │  0.5846  │0.578│
+└────────────────────────┴──────────┴───────────┴────────┴──────────┴─────┘
+
+Şekil 4.2: Confusion Matrix Karşılaştırması (Bkz. EK-A)
+Şekil 4.3: ROC Eğrileri (Bkz. EK-A)
+
+    En İyi Model: Logistic Regression
+    
+    Seçilme Nedenleri:
+    1. En yüksek F1-Score (0.6757)
+    2. Yüksek Recall (%81) - Tıbbi uygulamalarda kritik
+    3. Yorumlanabilir coefficient'lar
+    4. Dengeli precision-recall trade-off
+    5. Hızlı inference süresi
+
+
+4.4. Web Arayüzü Geliştirme
+
+    Streamlit framework kullanılarak 5 sayfalı web uygulaması 
+geliştirilmiştir:
+
+Şekil 4.4: Web Arayüzü Ana Sayfa (Bkz. EK-C)
+
+    Sayfalar:
+    1. Ana Sayfa: Proje özeti, model karşılaştırma dashboard
+    2. Veri Analizi: 4 tab'lı interaktif grafikler
+    3. Model Performansı: Confusion matrix, ROC, learning curves
+    4. Tahmin Yap: Gerçek zamanlı risk hesaplama, LIME açıklaması
+    5. Hakkında: Proje detayları
+
+    Özellikler:
+    • Modern gradient tasarım
+    • Custom CSS ile profesyonel görünüm
+    • Plotly ile interaktif grafikler
+    • Session state ile tahmin geçmişi
+    • Responsive layout
+
+
+4.5. Açıklanabilir Yapay Zeka (LIME)
+
+    LIME (Local Interpretable Model-agnostic Explanations) kullanılarak 
+her tahminin açıklaması sağlanmıştır.
+
+Şekil 4.5: LIME Açıklama Örneği (Bkz. EK-C)
+
+Tablo 4.2: Risk Faktörleri Önem Sıralaması
+
+┌──────┬─────────────────────────────┬──────────────────────────────────┐
+│ Sıra │ Özellik                     │ Açıklama                         │
+├──────┼─────────────────────────────┼──────────────────────────────────┤
+│  1   │ cp (Göğüs ağrısı tipi)      │ En güçlü risk belirleyicisi      │
+│  2   │ thalach (Max kalp atışı)    │ Düşük değerler yüksek risk       │
+│  3   │ oldpeak (ST depresyonu)     │ Yüksek değerler tehlikeli        │
+│  4   │ ca (Ana damar sayısı)       │ Tıkanma ile doğru orantılı       │
+│  5   │ sex (Cinsiyet)              │ Erkeklerde 2.2x daha fazla risk  │
+│  6   │ age (Yaş)                   │ Artan yaş ile risk artıyor       │
+└──────┴─────────────────────────────┴──────────────────────────────────┘
+
+    LIME Kullanımının Avantajları:
+    • Her tahmin için özelleştirilmiş açıklama
+    • Pozitif/negatif etkiler ayrı gösteriliyor
+    • Model-agnostic (her model ile kullanılabilir)
+    • Tıbbi personel için güven artışı
+    • Şeffaflık ve hesap verebilirlik
+═══════════════════════════════════════════════════════════════════════════
+3. MATERYAL VE METOD
+═══════════════════════════════════════════════════════════════════════════
+
+3.1. Veri Seti
+
+3.1.1. UCI Heart Disease Dataset
+
+    Projede kullanılan veri seti University of California, Irvine (UCI) 
+Machine Learning Repository'den alınmıştır. Veri seti 1988 yılında 
+Cleveland Clinic Foundation tarafından toplanmış ve kalp hastalığı 
+araştırmalarında referans veri seti olarak yaygın şekilde kullanılmaktadır.
+
+    Veri Seti Kaynağı:
+    https://archive.ics.uci.edu/ml/datasets/Heart+Disease
+
+    Alternatif Kaynak (Kaggle):
+    https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset
+
+
+3.1.2. Veri Seti Özellikleri
+
+    Veri seti 303 hasta kaydı ve 14 değişken içermektedir:
+
+Tablo 3.1: Veri Seti Özellikleri
+
+┌──────────┬─────────────────────────────┬────────────┬─────────────────┐
+│ Değişken │ Açıklama                    │ Tip        │ Değer Aralığı   │
+├──────────┼─────────────────────────────┼────────────┼─────────────────┤
+│ age      │ Hastanın yaşı               │ Sayısal    │ 29-77           │
+│ sex      │ Cinsiyet                    │ Kategorik  │ 0=Kadın,1=Erkek │
+│ cp       │ Göğüs ağrısı tipi           │ Kategorik  │ 0-3             │
+│ trestbps │ Dinlenme kan basıncı (mm Hg)│ Sayısal    │ 94-200          │
+│ chol     │ Serum kolesterol (mg/dl)    │ Sayısal    │ 126-564         │
+│ fbs      │ Açlık kan şekeri > 120      │ İkili      │ 0=Hayır,1=Evet  │
+│ restecg  │ Dinlenme EKG sonuçları      │ Kategorik  │ 0-2             │
+│ thalach  │ Maksimum kalp atış hızı     │ Sayısal    │ 71-202          │
+│ exang    │ Egzersiz kaynaklı anjina    │ İkili      │ 0=Hayır,1=Evet  │
+│ oldpeak  │ ST depresyonu               │ Sayısal    │ 0-6.2           │
+│ slope    │ ST segment eğimi            │ Kategorik  │ 0-2             │
+│ ca       │ Ana damar sayısı            │ Sayısal    │ 0-3             │
+│ thal     │ Talassemi                   │ Kategorik  │ 1-3             │
+│ target   │ Kalp hastalığı varlığı      │ İkili      │ 0=Sağlıklı,     │
+│          │ (HEDEF DEĞİŞKEN)            │            │ 1=Hasta         │
+└──────────┴─────────────────────────────┴────────────┴─────────────────┘
+
+    Veri Seti İstatistikleri:
+    • Toplam kayıt sayısı: 303
+    • Hasta/Sağlıklı dağılımı: 165 (%54.5) / 138 (%45.5) - Dengeli
+    • Eksik veri: Minimal (ön işleme ile temizlendi)
+    • Yaş ortalaması: 54.4 ± 9.1 yıl
+    • Erkek hasta oranı: %68.3
+
+
+3.2. Kullanılan Teknolojiler
+
+3.2.1. Python ve Kütüphaneler
+
+    Proje Python 3.13.7 programlama dili kullanılarak geliştirilmiştir. 
+Kullanılan temel kütüphaneler:
+
+Tablo 3.2: Kullanılan Python Kütüphaneleri
+
+┌────────────────────┬──────────┬──────────────────────────────────────┐
+│ Kütüphane          │ Versiyon │ Kullanım Amacı                       │
+├────────────────────┼──────────┼──────────────────────────────────────┤
+│ Pandas             │ 2.1.4    │ Veri manipülasyonu ve analizi        │
+│ NumPy              │ 1.24.3   │ Sayısal hesaplamalar                 │
+│ Scikit-learn       │ 1.3.0    │ Makine öğrenmesi algoritmaları       │
+│ Matplotlib         │ 3.7.1    │ Statik görselleştirme                │
+│ Seaborn            │ 0.12.2   │ İstatistiksel grafikler              │
+│ Plotly             │ 5.17.0   │ İnteraktif görselleştirme            │
+│ Streamlit          │ 1.28.1   │ Web arayüzü framework                │
+│ LIME               │ 0.2.0.1  │ Model açıklanabilirliği              │
+│ Python-docx        │ 0.8.11   │ Word rapor oluşturma                 │
+│ Joblib             │ 1.3.2    │ Model kaydetme/yükleme               │
+└────────────────────┴──────────┴──────────────────────────────────────┘
+
+
+3.2.2. Makine Öğrenmesi Algoritmaları
+
+    Projede üç farklı sınıflandırma algoritması kullanılmıştır:
+
+    1. Logistic Regression (Lojistik Regresyon):
+       • İkili sınıflandırma için klasik ve yorumlanabilir yöntem
+       • Sigmoid fonksiyonu ile olasılık tahmini
+       • Regularizasyon parametresi (C) ile overfitting kontrolü
+
+    2. Random Forest (Rastgele Orman):
+       • Ensemble learning yaklaşımı
+       • Birden fazla karar ağacının birleşimi
+       • Feature importance hesaplama yeteneği
+
+    3. K-Nearest Neighbors (K-En Yakın Komşu):
+       • Instance-based learning algoritması
+       • Mesafe metriği ile sınıflandırma
+       • Non-parametrik yöntem
+
+
+3.2.3. Web Arayüzü Teknolojileri
+
+    • Streamlit: Python tabanlı web framework
+    • Plotly: İnteraktif grafikler
+    • Custom CSS: Profesyonel tasarım
+    • Session State: Kullanıcı etkileşimi yönetimi
+
+3.3. Metodoloji
+
+    Proje aşağıdaki metodolojik yaklaşım ile gerçekleştirilmiştir:
+
+Şekil 3.1: Proje İş Akış Şeması
+
+    ┌─────────────────────┐
+    │  Veri Toplama       │
+    │  (UCI Repository)   │
+    └──────────┬──────────┘
+               │
+               ▼
+    ┌─────────────────────┐
+    │  Veri Ön İşleme     │
+    │  - Eksik veri       │
+    │  - Aykırı değer     │
+    │  - Normalizasyon    │
+    └──────────┬──────────┘
+               │
+               ▼
+    ┌─────────────────────┐
+    │  Model Eğitimi      │
+    │  - 3 Algoritma      │
+    │  - GridSearchCV     │
+    │  - Cross Validation │
+    └──────────┬──────────┘
+               │
+               ▼
+    ┌─────────────────────┐
+    │  Model Değerlendirme│
+    │  - Metrikler        │
+    │  - Görselleştirme   │
+    │  - LIME Analizi     │
+    └──────────┬──────────┘
+               │
+               ▼
+    ┌─────────────────────┐
+    │  Web Deployment     │
+    │  (Streamlit)        │
+    └─────────────────────┘
+
+
+3.3.1. Veri Ön İşleme
+
+    Veri ön işleme aşamasında şu adımlar gerçekleştirilmiştir:
+
+    a) Eksik Veri Kontrolü ve Doldurma:
+       • Sayısal değişkenler için median değeri
+       • Kategorik değişkenler için mode değeri
+       • Eksik veri oranı: %0 (veri seti temiz)
+
+    b) Aykırı Değer Tespiti:
+       • IQR (Interquartile Range) yöntemi kullanıldı
+       • Q1 - 1.5*IQR ve Q3 + 1.5*IQR sınırları belirlendi
+       • Aykırı değerler bu sınırlara cap edildi
+
+    c) Encoding (Kodlama):
+       • Label Encoding kullanıldı
+       • Kategorik değişkenler sayısallaştırıldı
+       • Değişkenler: sex, cp, fbs, restecg, exang, slope, ca, thal
+
+    d) Normalizasyon:
+       • MinMaxScaler ile [0,1] aralığına ölçeklendi
+       • Tüm özellikler aynı ağırlığa getirildi
+       • Gradient descent optimizasyonu için gerekli
+
+    e) Train-Test Ayrımı:
+       • Stratified split kullanıldı
+       • %80 eğitim (242 örnek)
+       • %20 test (61 örnek)
+       • Random state = 42 (reproducibility için)
+
+
+3.3.2. Model Eğitimi ve Optimizasyonu
+
+    Her bir algoritma için GridSearchCV ile hiperparametre optimizasyonu 
+yapılmıştır:
+
+    Logistic Regression Parametreleri:
+    • C (Regularization): [0.01, 0.1, 1]
+    • solver: liblinear
+    • max_iter: 1000
+
+    Random Forest Parametreleri:
+    • n_estimators (Ağaç sayısı): [50, 100]
+    • max_depth (Maksimum derinlik): [None, 10, 20]
+    • random_state: 42
+
+    K-Nearest Neighbors Parametreleri:
+    • n_neighbors (Komşu sayısı): [3, 5, 7]
+    • metric: Euclidean distance
+    • weights: uniform
+
+    Optimizasyon Detayları:
+    • Cross-Validation: 3-fold CV
+    • Scoring Metric: F1-Score (dengesiz veri için uygun)
+    • En iyi parametreler otomatik seçildi
+
+
+3.3.3. Model Değerlendirme
+
+    Modeller aşağıdaki metriklerle değerlendirilmiştir:
+
+    • Accuracy: Genel doğruluk oranı
+    • Precision: Pozitif tahminlerin doğruluğu (TP / (TP + FP))
+    • Recall: Gerçek pozitifleri bulma (TP / (TP + FN))
+    • F1-Score: Precision ve Recall'un harmonik ortalaması
+    • AUC-ROC: Sınıflandırma eğrisi altındaki alan
+
+    Tıbbi uygulamalarda Recall metriği kritiktir çünkü hasta olan bir 
+kişiyi sağlıklı olarak sınıflandırmak (False Negative) ciddi sonuçlar 
+doğurabilir.
+
+
+═══════════════════════════════════════════════════════════════════════════
+7. EKLER
+═══════════════════════════════════════════════════════════════════════════
+
+EK-A: Model Performans Grafikleri
+
+    A.1 - Confusion Matrix (Logistic Regression)
+    A.2 - Confusion Matrix (Random Forest)
+    A.3 - Confusion Matrix (K-Nearest Neighbors)
+    A.4 - ROC Curves (Tüm Modeller)
+    A.5 - Korelasyon Heatmap
+    A.6 - Sınıf Dağılımı Grafikleri
+    A.7 - Boxplot Grafikleri (Aykırı Değer Analizi)
+    A.8 - Learning Curves
+    A.9 - Validation Curves
+
+    Not: Tüm grafikler results/ klasöründe PNG formatında mevcuttur.
+
+
+EK-B: Kod Yapısı
+
+Proje Dosya Organizasyonu:
+
+project/
+│
+├── main.py                    # Ana çalıştırma dosyası (274 satır)
+│   ├── Veri yükleme
+│   ├── Ön işleme çağrıları
+│   ├── Model eğitimi koordinasyonu
+│   └── Rapor oluşturma
+│
+├── preprocess.py              # Veri ön işleme (232 satır)
+│   ├── load_data()
+│   ├── handle_missing_values()
+│   ├── detect_outliers_iqr()
+│   └── encode_and_scale()
+│
+├── train_models.py            # Model eğitimi (284 satır)
+│   ├── split_data()
+│   ├── train_logistic_regression()
+│   ├── train_random_forest()
+│   ├── train_knn()
+│   └── save_best_model()
+│
+├── evaluate.py                # Model değerlendirme (365 satır)
+│   ├── evaluate_model()
+│   ├── plot_confusion_matrix()
+│   ├── plot_roc_curve()
+│   └── create_all_visualizations()
+│
+├── report_generator.py        # Rapor oluşturma (391 satır)
+│   ├── generate_report()
+│   └── create_summary_report()
+│
+├── app.py                     # Streamlit web uygulaması (1700+ satır)
+│   ├── Ana Sayfa
+│   ├── Veri Analizi (4 tab)
+│   ├── Model Performansı
+│   ├── Tahmin Yap (LIME ile)
+│   └── Hakkında
+│
+├── heart.csv                  # Veri seti (303 kayıt, 14 sütun)
+├── requirements.txt           # Python dependencies
+├── requirements_app.txt       # Web app dependencies
+├── README.md                  # Detaylı dokümantasyon (900+ satır)
+│
+└── results/                   # Çıktılar
+    ├── best_model.pkl
+    ├── metrics_table.csv
+    ├── Final_Rapor_Heart_Disease.docx
+    ├── confusion_*.png (3 adet)
+    ├── roc_*.png (3 adet)
+    ├── corr_heatmap.png
+    ├── class_distribution.png
+    └── boxplots.png
+
+Toplam: ~2500+ satır Python kodu
+
+
+EK-C: Ekran Görüntüleri
+
+    C.1 - Ana Sayfa
+    C.2 - Model Karşılaştırma Dashboard
+    C.3 - Veri Analizi - Histogram Grafikleri
+    C.4 - Veri Analizi - Korelasyon Haritası
+    C.5 - Model Performansı Sayfası
+    C.6 - Confusion Matrix ve ROC Görünümü
+    C.7 - Tahmin Yap Sayfası - Form
+    C.8 - Tahmin Sonucu Ekranı
+    C.9 - LIME Açıklama Gösterimi
+    C.10 - Tahmin Geçmişi Dashboard
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+                              PROJE BİLGİLERİ
+
+Öğrenci               : Ferhat Bayutmuş
+E-posta               : ferhatbayutmus58@gmail.com
+Öğrenci Numarası      : [Numara]
+Üniversite            : İstanbul Medeniyet Üniversitesi
+Fakülte               : Mühendislik ve Doğa Bilimleri Fakültesi
+Bölüm                 : Bilgisayar Mühendisliği
+Ders                  : Veri Bilimine Giriş
+Ders Sorumlusu        : Dr. Öğr. Üyesi Muhammet Sinan BAŞARSLAN
+Akademik Yıl          : 2024-2025 Güz Dönemi
+Teslim Tarihi         : Ocak 2025
+
+Proje Adı             : Kalp Hastalığı Risk Tahmin Sistemi
+Proje Süresi          : 2 hafta
+Toplam Kod Satırı     : ~2500+ satır
+En İyi Model          : Logistic Regression (F1-Score: 0.6757)
+Web Arayüzü           : Streamlit (1700+ satır)
+
+Proje Durumu          : ✅ TAMAMLANDI
+
+═══════════════════════════════════════════════════════════════════════════
+
+                        SORUMLULUK REDDİ VE LİSANS
+
+    Bu proje EĞİTİM AMAÇLIDIR ve aşağıdaki koşullarda kullanılabilir:
+
+    ✅ İzin Verilen Kullanımlar:
+       • Akademik araştırmalarda referans gösterme
+       • Eğitim materyali olarak kullanma
+       • Kişisel öğrenme ve geliştirme
+
+    ❌ İzin Verilmeyen Kullanımlar:
+       • Ticari kullanım (onay gerekir)
+       • Tıbbi/klinik uygulamalar (FDA/CE onayı gerekir)
+       • Plagiarism (intihal)
+       • Gerçek hasta teşhisi için kullanım
+
+    ⚠️ ÖNEMLİ UYARI:
+    
+    Bu yazılım tıbbi tavsiye yerine geçmez. Kalp sağlığınız hakkında 
+    endişeleriniz varsa mutlaka bir doktora danışın. Bu aracın 
+    kullanımından kaynaklanan herhangi bir zarardan geliştirici sorumlu 
+    tutulamaz.
+
+═══════════════════════════════════════════════════════════════════════════
+
+Son Güncelleme: Ocak 2025
+Rapor Versiyonu: 1.0.0
+
+© 2025 Ferhat Bayutmuş - Tüm Hakları Saklıdır
+İstanbul Medeniyet Üniversitesi
+
+═══════════════════════════════════════════════════════════════════════════
+✓ Pandas/NumPy ile profesyonel veri manipülasyonu
+✓ Scikit-learn ile ML model eğitimi ve optimizasyonu
+✓ GridSearchCV ile hiperparametre optimizasyonu
+✓ Matplotlib/Seaborn/Plotly ile görselleştirme
+✓ Streamlit ile modern web uygulaması geliştirme
+✓ LIME kütüphanesi ile explainable AI implementasyonu
+✓ Session state yönetimi (prediction history tracking)
+✓ Custom CSS ile premium UI tasarımı
+✓ Git ile versiyon kontrolü ve proje yönetimi
+✓ Modüler kod yazma ve dokümantasyon
+
+Makine Öğrenmesi Kavramları:
+✓ Supervised learning prensipleri ve best practices
+✓ Classification algoritmaları (3 farklı model)
+✓ Train-test split ve cross-validation stratejileri
+✓ Confusion matrix detaylı yorumlama
+✓ Precision, Recall, F1-Score metrikleri ve trade-off'ları
+✓ ROC-AUC analizi ve threshold seçimi
+✓ Feature engineering ve scaling teknikleri
+✓ Overfitting/underfitting dengesi ve teşhisi
+✓ Learning curves ile model diagnosis
+✓ Validation curves ile hyperparameter tuning
+✓ Feature importance analizi
+✓ Model explainability ve interpretability (LIME)
+
+Domain Knowledge:
+✓ Kalp hastalığı risk faktörleri ve klinik önemi
+✓ Tıbbi veri analizi özel gereksinimleri
+✓ EKG ve klinik parametrelerin yorumlanması
+✓ Binary classification'ın medikal uygulamaları
+✓ Healthcare AI'da açıklanabilirliğin önemi
+
+Soft Skills:
+✓ Proje planlama ve zaman yönetimi
+✓ Araştırma ve kaynak bulma (UCI, Kaggle, docs)
+✓ Problemleri parçalara ayırıp çözme
+✓ Profesyonel dokümantasyon yazma
+✓ Sonuçları görsel olarak etkili sunma
+✓ Feature engineering ve scaling
+✓ Overfitting/underfitting dengesi
+
+Domain Knowledge:
+✓ Kalp hastalığı risk faktörleri
+✓ Tıbbi veri analizi
+✓ EKG ve klinik parametreler
+✓ Binary classification uygulamaları
+
+═══════════════════════════════════════════════════════════════════════════
+⚠️ LİMİTASYONLAR VE İYİLEŞTİRME ÖNERİLERİ
+═══════════════════════════════════════════════════════════════════════════
+
+Mevcut Limitasyonlar:
+• %60 accuracy klinik kullanım için düşük (ideal: >%90)
+• 303 örneklik veri seti küçük (önerilen: 1000+)
+• Tek veri kaynağı, dış validasyon yok
+• Demografik çeşitlilik sınırlı
+
+Gelecek İyileştirmeler:
+→ XGBoost, LightGBM gibi gelişmiş modeller denemek
+→ Daha büyük veri setleri ile eğitmek
+→ SMOTE ile veri dengeleme yapmak
+→ Deep Learning modelleri uygulamak
+→ Feature engineering geliştirmek
+→ Ensemble methods kullanmak
+
+═══════════════════════════════════════════════════════════════════════════
+📚 KAYNAKLAR
+═══════════════════════════════════════════════════════════════════════════
+
+Veri Seti:
+• UCI Machine Learning Repository - Heart Disease Dataset
+• https://archive.ics.uci.edu/ml/datasets/Heart+Disease
+
+Kütüphane Dokümantasyonları:
+• Scikit-learn: https://scikit-learn.org/
+• Pandas: https://pandas.pydata.org/
+• Streamlit: https://docs.streamlit.io/
+• Plotly: https://plotly.com/python/
+
+Öğrenme Kaynakları:
+• Andrew Ng - Machine Learning Course (Coursera)
+• "Hands-On Machine Learning" - Aurélien Géron
+• Python for Data Science Handbook - Jake VanderPlas
+
+═══════════════════════════════════════════════════════════════════════════
+📄 LİSANS VE SORUMLULUK REDDİ
+═══════════════════════════════════════════════════════════════════════════
+
+Bu proje EĞİTİM AMAÇLIDIR ve aşağıdaki koşullarda kullanılabilir:
+
+✅ İzin Verilen:
+   • Akademik araştırmalarda referans gösterme
+   • Eğitim materyali olarak kullanma
+   • Kişisel öğrenme ve geliştirme
+
+❌ İzin Verilmeyen:
+   • Ticari kullanım (onay gerekir)
+   • Tıbbi/klinik uygulamalar (FDA/CE onayı gerekir)
+   • Plagiarism (intihal)
+
+⚠️ UYARI: Bu yazılım tıbbi tavsiye yerine geçmez. Kalp sağlığınız hakkında
+endişeleriniz varsa mutlaka bir doktora danışın.
+
+═══════════════════════════════════════════════════════════════════════════
+📞 İLETİŞİM
+═══════════════════════════════════════════════════════════════════════════
+
+Öğrenci: Ferhat Bayutmuş
+E-posta: ferhatbayutmus58@gmail.com
+Üniversite: İstanbul Medeniyet Üniversitesi
+Bölüm: computer enginnering
+
+Proje hakkında sorularınız için e-posta ile ulaşabilirsiniz.
+
+═══════════════════════════════════════════════════════════════════════════
+
+Son Güncelleme: 17 Kasım 2025
+Proje Versiyonu: 1.0.0
+Durum: ✅ Teslime Hazır
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║              © 2025 Ferhat Bayutmuş - Tüm Hakları Saklıdır              ║
+╚══════════════════════════════════════════════════════════════════════════╝

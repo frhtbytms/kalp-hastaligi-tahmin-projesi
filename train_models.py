@@ -1,17 +1,11 @@
 """
-Makine Öğrenmesi Model Eğitimi Modülü
-Kalp Hastalığı Tahmini Projesi
+Model Eğitimi
+3 farklı algoritma deniyorum
 
-Bu modül, 3 farklı makine öğrenmesi algoritmasını eğitir:
-1. Logistic Regression - İkili sınıflandırma için klasik yöntem
-2. Random Forest - Ensemble learning yaklaşımı
-3. K-Nearest Neighbors - Mesafe tabanlı sınıflandırma
+Logistic Regression, Random Forest, KNN
+GridSearchCV ile optimize ediyorum
 
-Her model için GridSearchCV ile hiperparametre optimizasyonu yapılır.
-En iyi performans gösteren model kaydedilir.
-
-Geliştirici: Ferhat Bayutmuş
-Tarih: 17 Kasım 2025
+Ferhat Bayutmuş - 2025
 """
 
 import numpy as np

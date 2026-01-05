@@ -1,21 +1,11 @@
 """
-Word Raporu Oluşturma Modülü
-Kalp Hastalığı Tahmini Projesi
+Word Raporu Oluşturma
+Model sonuçlarını Word dosyasına yazdırıyorum
 
-Bu modül, proje sonuçlarını profesyonel bir Word belgesi olarak oluşturur.
+Proje bilgileri, performans tablosu ve grafikleri
+ekliyorum. Hocaya sunmak için hazır rapor
 
-Rapor İçeriği:
-- Proje başlığı ve öğrenci bilgileri
-- Veri seti özellikleri
-- Kullanılan metodoloji
-- Model performans tablosu
-- Görselleştirmeler (confusion matrix, ROC curves)
-- Sonuç ve değerlendirme
-
-Çıktı: Final_Rapor_Heart_Disease.docx
-
-Geliştirici: Ferhat Bayutmuş
-Tarih: 17 Kasım 2025
+Ferhat Bayutmuş - 2025
 """
 
 import pandas as pd

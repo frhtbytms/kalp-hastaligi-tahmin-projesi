@@ -1,18 +1,11 @@
 """
-Veri Ön İşleme Modülü
-Kalp Hastalığı Tahmini Projesi
+Veri Ön İşleme
+Veriyi modele hazırlıyorum
 
-Bu modül, ham veri setini makine öğrenmesi modellerine hazır hale getirir.
-Eksik veri doldurma, aykırı değer tespiti, encoding ve normalizasyon işlemlerini içerir.
+Eksik veri doldurma, aykırı değer tespiti, 
+encoding ve normalizasyon var
 
-Fonksiyonlar:
-- load_data(): CSV dosyasını okur
-- handle_missing_values(): Eksik verileri doldurur
-- detect_outliers_iqr(): IQR yöntemi ile aykırı değerleri tespit eder
-- encode_and_scale(): Kategorik kodlama ve ölçeklendirme yapar
-
-Geliştirici: Ferhat Bayutmuş
-Tarih: 17 Kasım 2025
+Ferhat Bayutmuş - 2025
 """
 
 import pandas as pd
